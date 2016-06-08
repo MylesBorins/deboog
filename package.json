@@ -1,0 +1,38 @@
+{
+  "name": "deboog",
+  "version": "1.0.0",
+  "description": "Debug node in your prefered browser",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run lint && npm run tap",
+    "lint": "eslint bin/ lib/ test/",
+    "tap": "tap --coverage-report=text \"test/**/**/test-*.js\"",
+    "coverage-html": "tap --coverage-report=html \"test/**/**/test-*.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheAlphaNerd/deboog.git"
+  },
+  "keywords": [
+    "Debugger",
+    "v8_inspector",
+    "--inspect",
+    "inspector"
+  ],
+  "author": "Myles Borins <myles.borins@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TheAlphaNerd/deboog/issues"
+  },
+  "homepage": "https://github.com/TheAlphaNerd/deboog#readme",
+  "devDependencies": {
+    "eslint": "^2.11.1",
+    "rewire": "^2.5.1",
+    "tap": "^5.7.2"
+  },
+  "dependencies": {
+    "open": "0.0.5",
+    "x-default-browser": "^0.3.1",
+    "yargs": "^4.7.1"
+  }
+}
