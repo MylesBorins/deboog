@@ -27,9 +27,9 @@ test('deboog: comingSoon()', (t) => {
 test('deboog(): each vendor', (t) => {
   t.plan(6)
   browsers.forEach((browser) => {
-    deboog('some/path/lol.js', browser, (err, msg) => {
+    deboog('some/path/lol.js', browser, (err, proc, br) => {
       t.error(err);
-      t.match(msg, browser, 'message should contain the appropriate browser');
+      t.equals(br, browser, 'message should contain the appropriate browser');
     });
   });
 });
@@ -38,17 +38,17 @@ test('deboog(): default browser', (t) => {
   t.plan(7)
   defaultBrowser((err, res) => {
     t.error(err);
-    deboog('lol/path.mjs', 'default', (er, msg) => {
+    deboog('lol/path.mjs', 'default', (er, proc, browser) => {
       t.error(er);
-      t.match(msg, res.commonName, 'message should contain the default browser');
+      t.equals(browser, res.commonName, 'message should contain the default browser');
     });
-    deboog('lol/path.mjs', (er, msg) => {
+    deboog('lol/path.mjs', (er, proc, browser) => {
       t.error(er);
-      t.match(msg, res.commonName, 'message should contain the default browser');
+      t.equals(browser, res.commonName, 'message should contain the default browser');
     });
-    deboog((er, msg) => {
+    deboog((er, proc, browser) => {
       t.error(er);
-      t.match(msg, res.commonName, 'message should contain the default browser');
+      t.equals(browser, res.commonName, 'message should contain the default browser');
     });
   });
 });
