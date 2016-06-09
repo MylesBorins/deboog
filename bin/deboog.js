@@ -1,16 +1,15 @@
 #!/usr/bin/env node
 
-const argv = require('yargs').argv;
-
 const deboog = require('../lib');
+const argv = process.argv.slice(2);
 
 var browser = 'default';
 
-if (argv.chrome) browser = 'chrome';
-if (argv.firefox) browser = 'firefox';
-if (argv.edge) browser = 'edge';
+if (argv[0] && argv[0].match('--')) {
+  browser = argv.shift().slice(2);
+}
 
-deboog(argv._[0], browser, (err, msg) => {
+deboog(argv, browser, (err, msg) => {
   if (err) {
     console.error(err);
     process.exitCode = 1;

@@ -1,3 +1,5 @@
+const EventEmitter = require('events');
+
 const test = require('tap').test;
 const rewire = require('rewire');
 const defaultBrowser = require('x-default-browser');
@@ -6,6 +8,14 @@ const deboog = rewire('../lib');
 const comingSoon = deboog.__get__('comingSoon');
 
 const browsers = ['firefox', 'chrome', 'edge'];
+
+var revert = deboog.__set__('launcher', () => {
+  const proc = new EventEmitter();
+  setTimeout(_ => {
+    proc.emit('exit');
+  }, 10)
+  return proc;
+});
 
 test('deboog: comingSoon()', (t) => {
   t.plan(3);
@@ -24,18 +34,19 @@ test('deboog(): each vendor', (t) => {
   });
 });
 
-test('deboog(): no file', (t) => {
-  deboog(null, (err) => {
-    t.equals(err.message, 'you need to provide a file');
-    t.end();
-  });
-});
-
 test('deboog(): default browser', (t) => {
-  t.plan(3)
+  t.plan(7)
   defaultBrowser((err, res) => {
     t.error(err);
     deboog('lol/path.mjs', 'default', (er, msg) => {
+      t.error(er);
+      t.match(msg, res.commonName, 'message should contain the default browser');
+    });
+    deboog('lol/path.mjs', (er, msg) => {
+      t.error(er);
+      t.match(msg, res.commonName, 'message should contain the default browser');
+    });
+    deboog((er, msg) => {
       t.error(er);
       t.match(msg, res.commonName, 'message should contain the default browser');
     });

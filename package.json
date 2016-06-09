@@ -9,6 +9,9 @@
     "tap": "tap --coverage-report=text \"test/**/**/test-*.js\"",
     "coverage-html": "tap --coverage-report=html \"test/**/**/test-*.js\""
   },
+  "bin": {
+    "deboog": "bin/deboog.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/TheAlphaNerd/deboog.git"
