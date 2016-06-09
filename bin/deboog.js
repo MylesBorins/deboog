@@ -9,21 +9,27 @@ if (argv[0] && argv[0].match('--')) {
   browser = argv.shift().slice(2);
 }
 
-deboog(argv, browser, (err, proc, browser) => {
+deboog(argv, browser, (err, debug, proc, browser) => {
   if (err) {
     console.error(err);
     process.exitCode = 1;
     return;
   }
   
-  process.on('SIGINT', ()=> {
+  process.on('SIGINT', _ => {
     console.log('💔 FORCE QUIT 💔');
-    proc.kill();
+    debug.kill();
     return;
   });
   
-  proc.on('exit', () => {
+  debug.on('exit', _ => {
     console.log(`Thanks for using Deboog to debug using the ${browser} dev tools!`);
+    return;
+  });
+  
+  proc.on('exit', _ => {
+    debug.kill();
+    console.log('Browser Window Closed');
     return;
   });
 });
