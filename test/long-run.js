@@ -1,7 +1,7 @@
 var count = 0;
 
 (function timeout() {
-  setTimeout(() => {
+  setTimeout(_ => {
     count += 1000;
     timeout();
   }, 1000);
